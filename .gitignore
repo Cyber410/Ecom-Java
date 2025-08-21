@@ -1,0 +1,164 @@
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Maven
+target/
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# VS Code
+.vscode/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Application properties with sensitive data
+**/application-*.properties
+!**/application.properties.example
+
+# H2 database files
+*.h2.db
+*.lock.db
+
+# Logs
+logs/
+*.log
+
+# Build directory
+build/
+
+# Local configuration files
+*.local.yml
+*.local.yaml
+*.local.properties
+
+# Maven wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+spring-boot-devtools
+
+# Node
+node_modules/
+
+# Environment files
+.env
+
+# IDE specific files
+*.sublime-workspace
+*.sublime-project
+
+# Project specific
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Spring Boot Actuator
+**/actuator/**
+
+# Spring Boot DevTools
+.spring-boot-devtools/
+
+# Spring Data JPA
+**/data/*
+
+# Spring Boot
+**/spring-boot-devtools/
+
+# Spring Boot Maven Plugin
+spring-boot-maven-plugin/
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# VS Code
+.vscode/
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Application properties with sensitive data
+**/application-*.properties
+!**/application.properties.example
+
+# H2 database files
+*.h2.db
+*.lock.db
+
+# Logs
+logs/
+*.log
+
+# Build directory
+build/
+
+# Local configuration files
+*.local.yml
+*.local.yaml
+*.local.properties
+
+# Maven wrapper
+!.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+spring-boot-devtools
+
+# Node
+node_modules/
+
+# Environment files
+.env
+
+# IDE specific files
+*.sublime-workspace
+*.sublime-project
+
+# Project specific
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Spring Boot Actuator
+**/actuator/**
+
+# Spring Boot DevTools
+.spring-boot-devtools/
+
+# Spring Data JPA
+**/data/*
+
+# Spring Boot
+**/spring-boot-devtools/
+
+# Spring Boot Maven Plugin
+spring-boot-maven-plugin/
