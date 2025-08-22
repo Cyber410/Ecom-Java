@@ -1,7 +1,7 @@
 package com.ecommerce.project.service;
 
-import com.ecommerce.project.excpetions.APIException;
-import com.ecommerce.project.excpetions.ResourceNotFoundException;
+import com.ecommerce.project.exceptions.APIException;
+import com.ecommerce.project.exceptions.ResourceNotFoundException;
 import com.ecommerce.project.model.Cart;
 import com.ecommerce.project.model.CartItem;
 import com.ecommerce.project.model.Product;
@@ -256,6 +256,7 @@ public class CartServiceImpl implements CartService {
             return cartRepository.save(newCart);
         }
 
+
     @Override
     public void updateProductInCarts(Long cartId, Long productId) {
         Cart cart = cartRepository.findById(cartId)
@@ -270,15 +271,21 @@ public class CartServiceImpl implements CartService {
             throw new APIException("Product " + product.getProductName() + " not available in the cart!!!");
         }
 
-        double cartPrice = cart.getTotalPrice()
-                - (cartItem.getProductPrice() * cartItem.getQuantity());
+        // Calculate price before updating
+        double oldItemTotal = cartItem.getProductPrice() * cartItem.getQuantity();
 
+        // Update both price and discount from the product
         cartItem.setProductPrice(product.getProductSpecialPrice());
+        cartItem.setDiscount(product.getDiscount());  // This line is needed!
 
-        cart.setTotalPrice(cartPrice
-                + (cartItem.getProductPrice() * cartItem.getQuantity()));
+        // Calculate new total
+        double newItemTotal = cartItem.getProductPrice() * cartItem.getQuantity();
+        double newCartTotal = cart.getTotalPrice() - oldItemTotal + newItemTotal;
 
-        cartItem = cartItemRepository.save(cartItem);
+        // Update cart total
+        cart.setTotalPrice(newCartTotal);
+
+        cartItemRepository.save(cartItem);
     }
 
     @Transactional

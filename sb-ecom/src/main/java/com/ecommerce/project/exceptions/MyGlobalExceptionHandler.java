@@ -1,4 +1,4 @@
-package com.ecommerce.project.excpetions;
+package com.ecommerce.project.exceptions;
 
 import com.ecommerce.project.payload.APIResponse;
 import org.springframework.http.HttpStatus;
