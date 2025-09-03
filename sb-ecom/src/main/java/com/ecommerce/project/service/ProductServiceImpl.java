@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -52,6 +54,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Value("${projects.image}")
     private String path;
+
+    @Value("${images.url}")
+    private String imageBaseUrl;
 
 
     @Override
@@ -100,12 +105,19 @@ public class ProductServiceImpl implements ProductService {
            throw new APIException("No products found");
         }
         else {
-            List<ProductDTO> productDTOs=products.stream().map(product->modelMapper.map(product,ProductDTO.class)).toList();
+            List<ProductDTO> productDTOs=products.stream().map(product->{
+                ProductDTO productDTO=modelMapper.map(product,ProductDTO.class);
+                productDTO.setProductImage(getImageUrl(product.getProductImage()));
+                return productDTO;
+            }).toList();
             ProductResponse productResponse=new ProductResponse();
             productResponse.setContent(productDTOs);
             return productResponse;
         }
 
+    }
+    private String getImageUrl(String imageName){
+        return imageBaseUrl.endsWith("/") ? imageBaseUrl + imageName : imageBaseUrl + "/" + imageName;
     }
 
     @Override
@@ -194,19 +206,19 @@ public class ProductServiceImpl implements ProductService {
             CartDTO cartDTO = modelMapper.map(cart, CartDTO.class);
 
             List<ProductDTO> products = cart.getCartItems().stream()
-                    .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+                    .map(p -> modelMapper.map(p.getProduct(), ProductDTO.class)).collect(toList());
 
             cartDTO.setProducts(products);
 
             return cartDTO;
 
-        }).collect(Collectors.toList());
+        }).collect(toList());
 
         cartDTOs.forEach(cart -> cartService.updateProductInCarts(cart.getCartId(), productId));
 
         return modelMapper.map(savedProduct, ProductDTO.class);
     }
-    
+
     @Override
     public ProductDTO deleteProduct(Long productId) {
         Product product = productRepository.findById(productId)
