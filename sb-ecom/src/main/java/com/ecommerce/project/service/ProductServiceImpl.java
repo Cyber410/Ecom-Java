@@ -62,8 +62,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDTO addProduct(Long categoryId, @Valid ProductDTO productDTO) {
 
-       Category category= categoryRepository.findById(categoryId)
-               .orElseThrow(()-> new ResourceNotFoundException("Category","id",categoryId));
+        Category category= categoryRepository.findById(categoryId)
+                .orElseThrow(()-> new ResourceNotFoundException("Category","id",categoryId));
 
         boolean isProductNotPresent = false;
 
@@ -75,16 +75,16 @@ public class ProductServiceImpl implements ProductService {
             }
         }
 
-    if(!isProductNotPresent) {
+        if(!isProductNotPresent) {
 
-        Product product=modelMapper.map(productDTO,Product.class);
+            Product product=modelMapper.map(productDTO,Product.class);
 
-        product.setCategory(category);
-        Double specialPrice=product.getProductPrice()-(product.getProductPrice()*product.getDiscount()*0.01);
-        product.setProductSpecialPrice(specialPrice);
-        product.setProductImage("default.jpg");
-        Product savedProduct=productRepository.save(product);
-        return modelMapper.map(savedProduct,ProductDTO.class);}
+            product.setCategory(category);
+            Double specialPrice=product.getProductPrice()-(product.getProductPrice()*product.getDiscount()*0.01);
+            product.setProductSpecialPrice(specialPrice);
+            product.setProductImage("default.jpg");
+            Product savedProduct=productRepository.save(product);
+            return modelMapper.map(savedProduct,ProductDTO.class);}
         else {
             throw new APIException("Product with name"+ " "+productDTO.getProductName()+ " " + "already exists");
         }
@@ -102,7 +102,7 @@ public class ProductServiceImpl implements ProductService {
 
 
         if(products.isEmpty()) {
-           throw new APIException("No products found");
+            throw new APIException("No products found");
         }
         else {
             List<ProductDTO> productDTOs=products.stream().map(product->{

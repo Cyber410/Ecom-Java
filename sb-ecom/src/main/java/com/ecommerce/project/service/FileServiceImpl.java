@@ -14,20 +14,16 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public String uploadImage(String path, MultipartFile file) throws IOException {
-        // Generate a unique filename
         String originalFileName = file.getOriginalFilename();
-        String fileExtension = originalFileName != null ? 
-            originalFileName.substring(originalFileName.lastIndexOf('.')) : "";
-        String fileName = UUID.randomUUID().toString() + fileExtension;
-        
-        // Save the file to the specified path
-        File targetFile = new File(path + File.separator + fileName);
-        File parentDir = targetFile.getParentFile();
-        if (!parentDir.exists()) {
-            parentDir.mkdirs();
-        }
-        
-        file.transferTo(targetFile);
+        String randomId = UUID.randomUUID().toString();
+        String fileName = randomId.concat(originalFileName.substring(originalFileName.lastIndexOf('.')));
+        String filePath = path + File.separator + fileName;
+
+        File folder = new File(path);
+        if (!folder.exists())
+            folder.mkdir();
+
+        Files.copy(file.getInputStream(), Paths.get(filePath));
         return fileName;
     }
 }
